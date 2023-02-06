@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Book {
+	id      		Int      	@id @default(autoincrement()) @db.UnsignedInt //unsignedInt means it can´t be negative
+	title   		String //you must give a title since it is not String?
+	pages   		Int      	@db.UnsignedInt
+	isbn	 		String?
+  	//isSelfPublished Boolean?	@default(true) testing to push then delete it and push again
+  	authors 		Author[] //creates the "middle table" linking both tables n:n Relation
+	publisherId  Int        @db.UnsignedInt
+	publisher    Publisher  @relation(fields: [publisherId], references: [id])
+}
+
+model Author {
+  id    		Int    		@id @default(autoincrement()) @db.UnsignedInt
+  name  		String
+  birthdate 	DateTime?	@db.Date //takes in consideration only the Date day/month/year and not time
+  books 		Book[] //creates the "middle table"
+}
+
+model Publisher {
+  id         Int        @id @default(autoincrement()) @db.UnsignedInt
+  name       String
+  books      Book[]
+}
+
+//After the schema modeling is done finish doing a npx prisma db push in terminal

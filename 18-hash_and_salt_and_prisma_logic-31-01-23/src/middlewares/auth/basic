@@ -1,0 +1,38 @@
+/* HTTP Basic authentication middleware */
+import Debug from 'debug'
+import {Request, Response, NextFunction} from 'express'
+
+const debug = Debug('prisma-books:basic')
+
+export const basic = (req: Request, res: Response, next: NextFunction ) =>{
+	debug("Hello from auth/basic!")
+
+	//make sure authorization header exists otherwise bail🛑
+	debug(req.headers)
+	if(!req.headers.authorization){
+		debug("Authorization is missing")
+
+		return res.status(401).send({
+			status: "fail",
+			data: "Authorization required"
+		})
+	}
+
+	//split authorization header
+
+	//check that authorization scheme is 'basic' otherwise bail🛑
+
+	//decode credentials
+
+	//split credentials on :
+
+	//get user from database, otherwise bail
+
+	//verify hash against credential, otherwise bail
+
+	//attach user to request
+	console.log('I´m so basic');
+
+	//nothing to see here, move along
+	next()
+}
