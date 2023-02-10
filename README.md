@@ -16,8 +16,6 @@ Vi kommer även i senare branches att sätta upp scripts i `package.json` så du
 
 ```zsh
 git pull
-git checkout lesson-1
-cd 01-basics
 npm install
 node index.js
 ```
