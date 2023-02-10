@@ -6,6 +6,8 @@ import { getUserByEmail } from '../services/user_service'
 
 export const createUserRules = [
 	body('name').isString().bail().isLength({ min: 3 }),
+	// body('images.thumbnail').isObject(),
+	// body('images.*.thumbnail').isString(), or body('images.*.thumbnail').isString().custom(promise => {all})
 	body('email').isEmail().custom(async value => {
 		// check if a User with that email already exists
 		const user = await getUserByEmail(value)
@@ -19,6 +21,15 @@ export const createUserRules = [
 
 export const updateUserRules = [
 	body('name').optional().isString().bail().isLength({ min: 3 }),
-	body('email').optional().isEmail(),
+	body('email').optional().isEmail().custom(async (value: string) => {
+		// check if a User with that email already exists
+		const user = await getUserByEmail(value)
+
+		if (user) {
+			// user already exists, throw a hissy-fit
+			return Promise.reject("Email already exists")
+		}
+	}),
 	body('password').optional().isString().bail().isLength({ min: 6 }),
 ]
+

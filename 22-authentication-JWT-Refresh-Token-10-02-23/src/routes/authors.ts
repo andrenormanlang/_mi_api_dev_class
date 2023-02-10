@@ -3,7 +3,7 @@
  */
 import express from 'express'
 import { body } from 'express-validator'
-import { index, store,show, addBook } from '../controllers/author_controller'
+import { index, store,show, addBook, removeBook } from '../controllers/author_controller'
 const router = express.Router()
 
 /**
@@ -27,5 +27,10 @@ router.post('/', [
  * POST /authors/:authorId/books
  */
 router.post('/:authorId/books', addBook)
+
+/**
+ * DELETE /authors/:authorId/books/:bookId
+*/
+router.delete('/:id/books/:bookId', removeBook)
 
 export default router

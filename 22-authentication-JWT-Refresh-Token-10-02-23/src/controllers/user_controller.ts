@@ -7,9 +7,8 @@ import { Request, Response } from 'express'
 import { matchedData, validationResult } from 'express-validator'
 import jwt from 'jsonwebtoken'
 import prisma from '../prisma'
-import { createUser, getUserByEmail } from '../services/user_service'
 import { JwtPayload } from '../types'
-
+import { createUser, getUserByEmail } from './../services/user_service';
 const debug = Debug('prisma-books:jwt')
 
 //Login as user
@@ -62,7 +61,7 @@ export const login = async (req: Request, res: Response) => {
 			message: "No refresh token secret defined",
 		})
 	}
-	
+
 	const refresh_token = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
 		expiresIn: process.env.REFRESH_TOKEN_LIFETIME || '1d',
 	})

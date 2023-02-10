@@ -86,6 +86,13 @@ export const destroy = async (req: Request, res: Response) => {
  * Link a book to a author
  */
 export const addBook = async (req: Request, res: Response) => {
+	console.log('Books to connect:', req.body.booksIds);
+	const bookIds = req.body.booksIds.map((bookId: Number) =>{
+		return {
+			id: bookId,
+		}
+	}) //[{},{}]
+	console.log('Books after map:', bookIds);
 	try {
 		const result = await prisma.author.update({
 			where: {
@@ -93,11 +100,10 @@ export const addBook = async (req: Request, res: Response) => {
 			},
 			data: {
 				books: {
-					connect: {
-						id: req.body.bookId,
+					connect: bookIds,
 					}
 				}
-			},
+			,
 			include: {
 				books: true,
 			}
@@ -108,3 +114,28 @@ export const addBook = async (req: Request, res: Response) => {
 		res.status(500).send({ message: "Something went wrong" })
 	}
 }
+
+/**
+ * Unlink a book from a author
+ *  */
+export const removeBook = async (req: Request, res: Response) => {
+	try {
+		await prisma.author.update({
+			where:{
+				id: Number(req.params.authorId),
+            },
+			data: {
+				books: {
+					disconnect:{
+						id: Number(req.params.bookId),
+					}
+				}
+			}
+		})
+
+	} catch (err) {
+		debug("Error thrown when removing book %o from a author %o: %o", req.body.bookId, req.params.authorId, err)
+		res.status(500).send({ message: "Something went wrong" })
+	}
+}
+
