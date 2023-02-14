@@ -32,9 +32,16 @@ Get movie details, including actors.
 
 ```json
 {
-  "title": "2001: A Space Odessey",
+  "title": "2001: A Space Odyssey",
   "runtime": 185,
-  "actors": []
+  "releaseYear": 1968
+}
+```
+
+```json
+{
+  "title": "Mongoose are not that cute! ",
+
 }
 ```
 
