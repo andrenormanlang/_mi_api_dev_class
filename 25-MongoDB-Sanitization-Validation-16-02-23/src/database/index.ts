@@ -36,3 +36,4 @@ export const connect = async () => {
 
 	console.log("🥳 We're connected to MongoDB Atlas!")
 }
+
