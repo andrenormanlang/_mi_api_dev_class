@@ -41,7 +41,8 @@ export const validateToken = (req: Request, res: Response, next: NextFunction) =
 		})
 	}
 
-	// Verify token(and extract payload) and attach payload to request, otherwise bail 🛑
+	// Verify token(and extract payload) and attach payload to request,
+	// otherwise bail 🛑
 	try {
 		const payload = (jwt.verify(token, process.env.ACCESS_TOKEN_SECRET || "") as unknown) as JwtPayload
 		debug("Yay got 📦: %o", payload)
@@ -52,7 +53,8 @@ export const validateToken = (req: Request, res: Response, next: NextFunction) =
 	} catch(err) {
 		debug("Token verification failed", err)
 
-		//return res.jsend.fail("") //Possibly works with express or typescript but not sure
+		// return res.jsend.fail("")
+		//Possibly works with express or typescript but not sure
 		return res.status(401).send({
             status: 'fail',
             data: "Authorization required"
