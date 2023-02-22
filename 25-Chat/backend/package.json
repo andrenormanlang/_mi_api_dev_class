@@ -1,5 +1,5 @@
 {
-  "name": "025-chat-backend",
+  "name": "07-chat-backend",
   "version": "1.0.0",
   "description": "",
   "main": "build/server.js",
